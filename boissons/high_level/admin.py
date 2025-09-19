@@ -5,7 +5,6 @@ from . import models
 admin.site.register(models.Localisation)
 admin.site.register(models.Local)
 admin.site.register(models.MatierePremiere)
-admin.site.register(models.QuantiteMatierePremiere)
 admin.site.register(models.Energie)
 admin.site.register(models.DebitEnergie)
 admin.site.register(models.Produit)
