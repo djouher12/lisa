@@ -142,4 +142,4 @@ class Fabrication(models.Model):
     ressources_humaines = models.ManyToManyField(RessourceHumaine)
 
     def __str__(self):
-        return self.Produit.nom
+        return self.produit.nom
