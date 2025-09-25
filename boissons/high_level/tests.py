@@ -9,7 +9,7 @@ class MachineModelTests(TestCase):
     def test_machine_creation(self):
         self.assertEqual(Machine.objects.count(), 0)
         lolo = Localisation.objects.create(nom="Lyon", taxes=20, prix_m2=6000)
-        toto = Local.objects.create(nom="Local303", localisation=lolo)
+        toto = Local.objects.create(nom="Local303", localisation=lolo, surface=40)
         Machine.objects.create(
             nom="Mélangeur",
             prix_achat=28_000,
