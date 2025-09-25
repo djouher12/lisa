@@ -5,7 +5,8 @@ class Localisation(models.Model):
     nom = models.CharField(max_length=100)
     taxes = models.IntegerField()
     prix_m2 = models.IntegerField()
-
+    def __str__ (self): 
+        return self.nom 
 
 class Local(models.Model):
     nom = models.CharField(max_length=100)
@@ -14,12 +15,16 @@ class Local(models.Model):
         on_delete=models.PROTECT,
     )
     surface = models.IntegerField()
+    def __str__ (self): 
+        return self.nom 
 
 
 class MatierePremiere(models.Model):
     nom = models.CharField(max_length=100)
     stock = models.IntegerField()
     emprise = models.IntegerField()
+    def __str__ (self): 
+        return self.nom 
 
 
 class QuantiteMatierePremiere(models.Model):
@@ -31,7 +36,8 @@ class QuantiteMatierePremiere(models.Model):
 
     class Meta:
         abstract = True
-
+    def __str__ (self): 
+        return self.quantite, self.MatierePremiere
 
 class Energie(models.Model):
     nom = models.CharField(max_length=100)
@@ -40,12 +46,15 @@ class Energie(models.Model):
         Localisation,
         on_delete=models.PROTECT,
     )
+    def __str__ (self): 
+        return self.nom 
 
 
 class DebitEnergie(models.Model):
     debit = models.IntegerField()
     energie = models.IntegerField()
-
+    def __str__ (self): 
+        return self.debit, self.energie 
 
 class Produit(models.Model):
     nom = models.CharField(max_length=100)
@@ -56,6 +65,8 @@ class Produit(models.Model):
         Local,
         on_delete=models.PROTECT,
     )
+    def __str__ (self): 
+        return self.nom 
 
 
 class UtilisationMatierePremiere(MatierePremiere):
@@ -69,11 +80,14 @@ class ApprovisionnementMatierePremiere(models.Model):
     )
     prix_unitaire = models.IntegerField()
     delais = models.IntegerField()
-
+    def __str__ (self): 
+        return self.localisation, self.prix_unitaire, self.delais 
 
 class Metier(models.Model):
     nom = models.CharField(max_length=100)
     renumeration = models.IntegerField()
+    def __str__ (self): 
+        return self.nom 
 
 
 class RessourceHumaine(models.Model):
@@ -82,7 +96,8 @@ class RessourceHumaine(models.Model):
         on_delete=models.PROTECT,
     )
     quantite = models.CharField(max_length=100)
-
+    def __str__ (self): 
+        return self.metier 
 
 class Machine(models.Model):
     nom = models.CharField(max_length=100)
@@ -97,6 +112,8 @@ class Machine(models.Model):
         Local,
         on_delete=models.PROTECT,
     )
+    def __str__ (self): 
+        return self.nom 
 
 
 class Fabrication(models.Model):
@@ -106,4 +123,6 @@ class Fabrication(models.Model):
     )
     utilisation_matiere_premiere = models.ManyToManyField(UtilisationMatierePremiere)
     machines = models.ManyToManyField(Machine)
-    resssources_humaines = models.ManyToManyField(RessourceHumaine)
+    ressources_humaines = models.ManyToManyField(RessourceHumaine)
+    def __str__ (self): 
+        return self.produit
