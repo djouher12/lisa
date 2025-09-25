@@ -13,7 +13,7 @@ class MachineModelTests(TestCase):
             nom="Mélangeur",
             prix_achat=28_000,
             cout_maintenance=3000,
-            operateur="op1",
+            # operateur="op1",
             debit=1200,
             surface=500,
             debit_energie=1200,
