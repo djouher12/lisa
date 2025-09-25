@@ -42,7 +42,7 @@ class QuantiteMatierePremiere(models.Model):
         abstract = True
 
     def __str__(self):
-        return self.quantite, self.MatierePremiere.nom
+        return self.quantite, self.matierePremiere.nom
 
 
 class Energie(models.Model):
@@ -92,7 +92,7 @@ class ApprovisionnementMatierePremiere(models.Model):
     delais = models.IntegerField()
 
     def __str__(self):
-        return self.Localisation.nom
+        return self.localisation.nom
 
 
 class Metier(models.Model):
@@ -111,7 +111,7 @@ class RessourceHumaine(models.Model):
     quantite = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.Metier.nom
+        return self.metier.nom
 
 
 class Machine(models.Model):
