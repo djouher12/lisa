@@ -42,7 +42,7 @@ class QuantiteMatierePremiere(models.Model):
         abstract = True
 
     def __str__(self):
-        return self.quantite, self.matierePremiere.nom
+        return str(self.quantite), self.matierePremiere.nom
 
 
 class Energie(models.Model):
@@ -62,7 +62,7 @@ class DebitEnergie(models.Model):
     energie = models.IntegerField()
 
     def __str__(self):
-        return self.debit
+        return str(self.debit)
 
 
 class Produit(models.Model):
