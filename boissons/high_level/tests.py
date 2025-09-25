@@ -1,8 +1,7 @@
 from django.test import TestCase
-
-from .models import Machine
-from .models import Local
 from .models import Localisation
+from .models import Local
+from .models import Machine
 
 
 class MachineModelTests(TestCase):
