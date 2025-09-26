@@ -22,12 +22,13 @@ class Local(models.Model):
     def __str__(self):
         return self.nom
 
-    def costs(self, s):
-        s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
+    def costs(self):
+        s = 0
         for m in self.machine_set.all():
             s += m.costs()
         for MM in self.matierePremiere_set.all():
             s += MM.costs()
+        s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
 
 
 class MatierePremiere(models.Model):
