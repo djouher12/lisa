@@ -29,6 +29,7 @@ class Local(models.Model):
         for p in self.produit_set.all():
             s += p.costs()
         s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
+        print(s)
 
 
 class MatierePremiere(models.Model):
