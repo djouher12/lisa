@@ -26,8 +26,8 @@ class Local(models.Model):
         s = 0
         for m in self.machine_set.all():
             s += m.costs()
-        for MM in self.MatierePremiere_set.all():
-            s += MM.costs()
+        for p in self.Produit_set.all():
+            s += p.costs()
         s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
 
 
