@@ -33,6 +33,8 @@ class MachineModelTests(TestCase):
             taux_utilisation=24,
             local=toto,
         )
+
+        Local.objects.first().costs()
         # self.assertEqual(Machine.objects.count(), 1)
 
 

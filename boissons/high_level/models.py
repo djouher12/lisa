@@ -16,6 +16,7 @@ class Local(models.Model):
         Localisation,
         on_delete=models.PROTECT,
     )
+
     surface = models.IntegerField()
 
     def __str__(self):
@@ -23,7 +24,10 @@ class Local(models.Model):
 
     def costs(self, s):
         s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
-        return s
+        for m in self.machine_set.all():
+            s += m.costs()
+        for MM in self.matierePremiere_set.all():
+            s += MM.costs()
 
 
 class MatierePremiere(models.Model):
