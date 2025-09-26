@@ -9,6 +9,9 @@ class Localisation(models.Model):
     def __str__(self):
         return self.nom
 
+    def json(self):
+        return {"nom": self.nom, "taxes": self.taxes, "prix_m2": self.prix_m2}
+
 
 class Local(models.Model):
     nom = models.CharField(max_length=100)
@@ -31,6 +34,13 @@ class Local(models.Model):
         s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
         print(s)
 
+    def json(self):
+        return {
+            "nom": self.nom,
+            "localisation": self.localisation,
+            "surface": self.surface,
+        }
+
 
 class MatierePremiere(models.Model):
     nom = models.CharField(max_length=100)
@@ -39,6 +49,9 @@ class MatierePremiere(models.Model):
 
     def __str__(self):
         return self.nom
+
+    def json(self):
+        return {"nom": self.nom, "stock": self.stock, "emrpise": self.emprise}
 
 
 class QuantiteMatierePremiere(models.Model):
@@ -54,6 +67,9 @@ class QuantiteMatierePremiere(models.Model):
     def __str__(self):
         return str(self.quantite), self.matierePremiere.nom
 
+    def json(self):
+        return {"quantite": self.quantite, "matiere_premiere": self.matiere_premiere}
+
 
 class Energie(models.Model):
     nom = models.CharField(max_length=100)
@@ -66,6 +82,9 @@ class Energie(models.Model):
     def __str__(self):
         return self.nom
 
+    def json(self):
+        return {" nom ": self.nom, "prix": self.prix, "localisation": self.localisation}
+
 
 class DebitEnergie(models.Model):
     debit = models.IntegerField()
@@ -77,6 +96,9 @@ class DebitEnergie(models.Model):
     def costs(self, debit_energetique):
         debit_energetique = (self.debit) * (self.energie)
         return debit_energetique
+
+    def json(self):
+        return {" debit": self.debit, "energie ": self.energie}
 
 
 class Produit(models.Model):
@@ -95,6 +117,15 @@ class Produit(models.Model):
     def costs(self, s):
         s = (self.quantite) * (self.prix_de_vente)
         return s
+
+    def json(self):
+        return {
+            "nom ": self.nom,
+            "prix_de_vente ": self.prix_de_vente,
+            "quantite ": self.quantite,
+            "emprise ": self.emprise,
+            "local": self.local,
+        }
 
 
 class UtilisationMatierePremiere(MatierePremiere):
@@ -116,6 +147,13 @@ class ApprovisionnementMatierePremiere(models.Model):
         s = (self.matiere_premiere.stock) * (self.prix_unitaire)
         return s
 
+    def json(self):
+        return {
+            "localisation": self.localisation,
+            "prix_unitaire": self.prix_unitaire,
+            "delais": self.delais,
+        }
+
 
 class Metier(models.Model):
     nom = models.CharField(max_length=100)
@@ -123,6 +161,9 @@ class Metier(models.Model):
 
     def __str__(self):
         return self.nom
+
+    def json(self):
+        return {"nom": self.nom, "renumeration": self.renumeration}
 
 
 class RessourceHumaine(models.Model):
@@ -138,6 +179,9 @@ class RessourceHumaine(models.Model):
     def costs(self, s):
         s = (self.metier.renumeration) * (self.quantite)
         return s
+
+    def json(self):
+        return {"quantite": self.quantite, "metier": self.metier}
 
 
 class Machine(models.Model):
@@ -164,6 +208,19 @@ class Machine(models.Model):
             + (self.debit_energie) * (self.taux_utilisation)
         )
 
+    def json(self):
+        return {
+            "nom": self.nom,
+            "prix_achat": self.prix_achat,
+            "cout_maintenance": self.cout_maintenance,
+            "operateur": self.operateur,
+            "debit": self.debit,
+            "surface": self.surface,
+            "debit_energie": self.debit_energie,
+            "taux_utilisation": self.taux_utilisation,
+            "local": self.local,
+        }
+
 
 class Fabrication(models.Model):
     produit = models.ForeignKey(
@@ -176,3 +233,11 @@ class Fabrication(models.Model):
 
     def __str__(self):
         return self.produit.nom
+
+    def json(self):
+        return {
+            "produit": self.produit,
+            "utilisation_matiere_premiere": self.utilisation_matiere_premiere,
+            "machines": self.machines,
+            "ressources_humaines": self.ressources_humaines,
+        }
