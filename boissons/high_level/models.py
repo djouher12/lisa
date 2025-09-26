@@ -21,6 +21,10 @@ class Local(models.Model):
     def __str__(self):
         return self.nom
 
+    def costs(self, s):
+        s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
+        return s
+
 
 class MatierePremiere(models.Model):
     nom = models.CharField(max_length=100)
@@ -64,6 +68,10 @@ class DebitEnergie(models.Model):
     def __str__(self):
         return str(self.debit)
 
+    def costs(self, debit_energetique):
+        debit_energetique = (self.debit) * (self.energie)
+        return debit_energetique
+
 
 class Produit(models.Model):
     nom = models.CharField(max_length=100)
@@ -78,12 +86,16 @@ class Produit(models.Model):
     def __str__(self):
         return self.nom
 
+    def costs(self, s):
+        s = (self.quantite) * (self.prix_de_vente)
+        return s
+
 
 class UtilisationMatierePremiere(MatierePremiere):
     pass
 
 
-class ApprovisionnementMatierePremiere(models.Model):
+class ApprovisionnementMatierePremiere(models.QuantiteMatierePremiere):
     localisation = models.ForeignKey(
         Localisation,
         on_delete=models.PROTECT,
@@ -93,6 +105,10 @@ class ApprovisionnementMatierePremiere(models.Model):
 
     def __str__(self):
         return self.localisation.nom
+
+    def costs(self, s):
+        s = (self.matiere_premiere.stock) * (self.prix_unitaire)
+        return s
 
 
 class Metier(models.Model):
@@ -113,6 +129,10 @@ class RessourceHumaine(models.Model):
     def __str__(self):
         return self.metier.nom
 
+    def costs(self, s):
+        s = (self.metier.renumeration) * (self.quantite)
+        return s
+
 
 class Machine(models.Model):
     nom = models.CharField(max_length=100)
@@ -130,6 +150,13 @@ class Machine(models.Model):
 
     def __str__(self):
         return self.nom
+
+    def costs(self):
+        return (
+            (self.prix_achat)
+            + (self.cout_maintenance)
+            + (self.debit_energie) * (self.taux_utilisation)
+        )
 
 
 class Fabrication(models.Model):
