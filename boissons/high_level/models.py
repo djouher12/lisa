@@ -24,9 +24,9 @@ class Local(models.Model):
 
     def costs(self):
         s = 0
-        for m in self.machine_set.all():
+        for m in self.Machine_set.all():
             s += m.costs()
-        for MM in self.matierePremiere_set.all():
+        for MM in self.MatierePremiere_set.all():
             s += MM.costs()
         s = (self.surface) * (self.localisation.taxes) * (self.localisation.prix_m2)
 
