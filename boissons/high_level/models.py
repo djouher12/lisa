@@ -95,7 +95,7 @@ class UtilisationMatierePremiere(MatierePremiere):
     pass
 
 
-class ApprovisionnementMatierePremiere(models.QuantiteMatierePremiere):
+class ApprovisionnementMatierePremiere(models.Model):
     localisation = models.ForeignKey(
         Localisation,
         on_delete=models.PROTECT,
