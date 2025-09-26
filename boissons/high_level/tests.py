@@ -2,6 +2,8 @@ from django.test import TestCase
 from .models import Localisation
 from .models import Local
 from .models import Machine
+from .models import MatierePremiere
+from .models import ApprovisionnementMatierePremiere
 
 
 class MachineModelTests(TestCase):
@@ -32,3 +34,27 @@ class MachineModelTests(TestCase):
             local=toto,
         )
         # self.assertEqual(Machine.objects.count(), 1)
+
+
+class MatierePremiereModelTests(TestCase):
+    def test_matiere_premiere(self):
+        self.assertEqual(MatierePremiere.objects.count(), 0)
+        MatierePremiere.objects.create(
+            nom="sucre",
+            stock=1000,
+            emprise=6,
+        )
+        MatierePremiere.objects.create(
+            nom="eau",
+            stock=50,
+            emprise=5,
+        )
+
+
+class ApprovisionnementMatierePremiereModelTests(TestCase):
+    def test_matiere_premiere(self):
+        self.assertEqual(MatierePremiere.objects.count(), 0)
+        ll = Localisation.objects.create(nom="Labège", taxes=50, prix_m2=2000)
+        ApprovisionnementMatierePremiere.objects.create(
+            localisation=ll, prix_unitaire=10, delais=24
+        )
