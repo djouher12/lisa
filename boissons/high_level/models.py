@@ -24,7 +24,7 @@ class Local(models.Model):
 
     def costs(self):
         s = 0
-        for m in self.Machine_set.all():
+        for m in self.machine_set.all():
             s += m.costs()
         for MM in self.MatierePremiere_set.all():
             s += MM.costs()
