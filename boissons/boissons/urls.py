@@ -15,64 +15,66 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.contrib import admin
 from django.urls import path
-from . import models
+from high_level import views
 
 
 urlpatterns = [
+    path("admin/", admin.site.urls),
     path(
-        "",
-        models.views.LocalisationDetailView.as_view(),
-        name=models.Localisation,
+        "localisation/<int:pk>",
+        views.LocalisationDetailView.as_view(),
+        name="localisation",
     ),
     path(
-        "",
-        models.views.LocalDetailView.as_view(),
-        name=models.Local,
+        "local/<int:pk>",
+        views.LocalDetailView.as_view(),
+        name="local",
     ),
     path(
-        "",
-        models.views.EnergieDetailView.as_view(),
-        name=models.Energie,
+        "energie/<int:pk>",
+        views.EnergieDetailView.as_view(),
+        name="energie",
     ),
     path(
-        "",
-        models.views.DebitEnergieDetailView.as_view(),
-        name=models.DebitEnergie,
+        "debitEnergie/<int:pk>",
+        views.DebitEnergieDetailView.as_view(),
+        name="debitenergie",
     ),
     path(
-        "",
-        models.views.ProduitDetailView.as_view(),
-        name=models.Produit,
+        "produitdetail/<int:pk>",
+        views.ProduitDetailView.as_view(),
+        name="produit",
     ),
     path(
-        "",
-        models.views.MetierDetailView.as_view(),
-        name=models.Metier,
+        "metier/<int:pk>",
+        views.MetierDetailView.as_view(),
+        name="metier",
     ),
     path(
-        "",
-        models.views.ApprovisionnementMatierePremiereDetailView.as_view(),
-        name=models.ApprovisionnementMatierePremiere,
+        "approvisionnementMatierePremiere/<int:pk>",
+        views.ApprovisionnementMatierePremiereDetailView.as_view(),
+        name="approvisionnementmatierepremiere",
     ),
     path(
-        "",
-        models.views.RessourceHumaineDetailView.as_view(),
-        name=models.RessourceHumaine,
+        "ressourceHumaine/<int:pk>",
+        views.RessourceHumaineDetailView.as_view(),
+        name="ressourceHumaine",
     ),
     path(
-        "",
-        models.views.FabricationDetailView.as_view(),
-        name=models.Fabrication,
+        "fabrication/<int:pk>",
+        views.FabricationDetailView.as_view(),
+        name="fabrication",
     ),
     path(
-        "",
-        models.views.MachineDetailView.as_view(),
-        name=models.Machine,
+        "machine/<int:pk>",
+        views.MachineDetailView.as_view(),
+        name="machine",
     ),
     path(
-        "",
-        models.views.MatierePremiereDetailView.as_view(),
-        name=models.MatierePremiere,
+        "matierePremiere/<int:pk>",
+        views.MatierePremiereDetailView.as_view(),
+        name="matierepremiere",
     ),
 ]
