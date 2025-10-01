@@ -37,7 +37,7 @@ class Local(models.Model):
     def json(self):
         return {
             "nom": self.nom,
-            "localisation": self.localisation,
+            "localisation": self.localisation.pk,
             "surface": self.surface,
         }
 
@@ -68,7 +68,7 @@ class QuantiteMatierePremiere(models.Model):
         return str(self.quantite), self.matierePremiere.nom
 
     def json(self):
-        return {"quantite": self.quantite, "matiere_premiere": self.matiere_premiere}
+        return {"quantite": self.quantite, "matiere_premiere": self.matiere_premiere.pk}
 
 
 class Energie(models.Model):
@@ -83,7 +83,11 @@ class Energie(models.Model):
         return self.nom
 
     def json(self):
-        return {" nom ": self.nom, "prix": self.prix, "localisation": self.localisation}
+        return {
+            " nom ": self.nom,
+            "prix": self.prix,
+            "localisation": self.localisation.pk,
+        }
 
 
 class DebitEnergie(models.Model):
@@ -124,7 +128,7 @@ class Produit(models.Model):
             "prix_de_vente ": self.prix_de_vente,
             "quantite ": self.quantite,
             "emprise ": self.emprise,
-            "local": self.local,
+            "local": self.local.pk,
         }
 
 
@@ -149,7 +153,7 @@ class ApprovisionnementMatierePremiere(models.Model):
 
     def json(self):
         return {
-            "localisation": self.localisation,
+            "localisation": self.localisation.pk,
             "prix_unitaire": self.prix_unitaire,
             "delais": self.delais,
         }
@@ -181,7 +185,7 @@ class RessourceHumaine(models.Model):
         return s
 
     def json(self):
-        return {"quantite": self.quantite, "metier": self.metier}
+        return {"quantite": self.quantite, "metier": self.metier.pk}
 
 
 class Machine(models.Model):
@@ -213,12 +217,12 @@ class Machine(models.Model):
             "nom": self.nom,
             "prix_achat": self.prix_achat,
             "cout_maintenance": self.cout_maintenance,
-            "operateur": self.operateur,
+            "operateur": [o.pk for o in self.operateur.all()],
             "debit": self.debit,
             "surface": self.surface,
             "debit_energie": self.debit_energie,
             "taux_utilisation": self.taux_utilisation,
-            "local": self.local,
+            "local": self.local.pk,
         }
 
 
@@ -236,8 +240,10 @@ class Fabrication(models.Model):
 
     def json(self):
         return {
-            "produit": self.produit,
-            "utilisation_matiere_premiere": self.utilisation_matiere_premiere,
-            "machines": self.machines,
-            "ressources_humaines": self.ressources_humaines,
+            "produit": self.produit.pk,
+            "utilisation_matiere_premiere": [
+                o.pk for o in self.utilisation_matiere_premiere.all()
+            ],
+            "machines": [q.pk for q in self.machines.all()],
+            "ressources_humaines": [p.pk for p in self.ressources_humaines.all()],
         }
